@@ -20,6 +20,6 @@ class AuthServiceLocator extends ServiceLocator {
         () => AuthRepositoryImpl(remoteDataSource: sl()));
     // data sources
     sl.registerLazySingleton<AuthRemoteDataSourceContract>(
-        () => AuthRemoteDataSourceImpl(dioWrapper: sl<CustomAuthDio>()));
+        () => AuthRemoteDataSourceImpl(dioWrapper: sl()));
   }
 }

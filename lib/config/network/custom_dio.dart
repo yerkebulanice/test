@@ -23,6 +23,7 @@ class CustomDio extends ServiceLocator {
     ResponseInterceptorHandler handler,
   ) {
     print('RESPONSE::  URI: ${response.data}');
+    print('STATUS CODE: ${response.statusCode}');
     if (response.statusCode != 200) {
       throw 'Error: ${response.statusCode}';
     }

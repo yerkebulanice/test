@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:test_task/config/network/custom_dio.dart';
 import 'package:test_task/core/service_locator_manager.dart';
 import 'package:test_task/features/auth/auth_sl.dart';
 import 'package:test_task/features/auth/presentation/bloc/auth_bloc.dart';
@@ -15,7 +16,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) => const MaterialApp(title: 'Test Task', home: Home());
 
-  Future<void> init() async => await ServiceLocatorManager.init(services: [AuthServiceLocator()]);
+  Future<void> init() async {
+    await ServiceLocatorManager.init(
+      services: [
+        AuthServiceLocator(),
+        CustomAuthDio(backendUrl: "https://dasta.vilion-k.ru/api/v1"),
+      ],
+    );
+  }
 }
 
 class Home extends StatefulWidget {
@@ -28,7 +36,6 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   void initState() {
-    globalSL<AuthBloc>().add(SignInEvent(email: "erkebulanice@gmail.com", password: "qwerty123"));
     super.initState();
   }
 
@@ -36,8 +43,21 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("Test Task")),
-      body: BlocBuilder(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          globalSL<AuthBloc>().add(
+            SignInEvent(email: "erkebulanice@gmail.com", password: "qwerty123"),
+          );
+        },
+        child: const Icon(Icons.add),
+      ),
+      body: BlocConsumer<AuthBloc, AuthState>(
+        bloc: globalSL<AuthBloc>(),
+        listener: (context, state) {
+          print('STATE $state');
+        },
         builder: (context, state) {
+          print('STATE $state');
           if (state is LoadingAuthState) {
             return const Center(child: CircularProgressIndicator());
           }
@@ -54,7 +74,6 @@ class _HomeState extends State<Home> {
 
           return Container();
         },
-        bloc: globalSL<AuthBloc>(),
       ),
     );
   }

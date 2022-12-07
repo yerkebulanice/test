@@ -5,6 +5,7 @@ Future<Either<String, Payload>> exception2either<Payload>(
   try {
     return Right(await function());
   } catch (exception) {
+    print('ERROR: ${exception.toString()}');
     return Left('Error ${exception.toString()}');
   }
 }

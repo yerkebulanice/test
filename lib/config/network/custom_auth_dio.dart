@@ -16,6 +16,7 @@ class CustomAuthDio extends CustomDio {
     RequestOptions requestOptions,
     RequestInterceptorHandler handler,
   ) {
+    print('URL' + requestOptions.baseUrl);
     return handler.next(requestOptions);
   }
 
