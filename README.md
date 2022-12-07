@@ -1,16 +1,9 @@
-# test_task
-
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Subtasks:
+  1. Create Custom Config folder, which contains custom dio file
+  2. Create list of all endpoints in remote data source class
+  3. Create entities(sign in, sign up entities)
+  4. Create models(sign in, sign up models)
+  5. Make usecases for both endpoint, also their body params
+  6. Create bloc: make 2 event(SignInEvent, SignUpEvent) and same 2 states(SignInState, SignUpState)
+  7. Create service locator, which register bloc, usecases, repositories, datasources
+  8. In home app just call SignInEvent
