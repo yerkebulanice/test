@@ -16,7 +16,9 @@ class AuthRepositoryImpl implements AuthRepositoryContract {
   @override
   Future<Either<String, SignInEntity>> signIn(SigninParams signinParams) async {
     return exception2either(function: () async {
+      print('SIGN IN PARAMS: ${signinParams.getBody()}');
       final SignInModel signInModel = await remoteDataSource.signIn(signinParams.getBody());
+      print('SIGN IN MODEL: ${signInModel.toJson()}');
       return signInModel;
     });
   }

@@ -7,8 +7,8 @@ import 'package:test_task/features/auth/data/models/sign_up_model.dart';
 part 'auth_remote_data_source.g.dart';
 
 abstract class AuthRemoteDataSourceContract {
-  Future<SignInModel> signIn(Map<String, dynamic> body);
-  Future<SignUpModel> signUp(Map<String, dynamic> body);
+  Future<SignInModel> signIn(@Body() Map<String, dynamic> body);
+  Future<SignUpModel> signUp(@Body() Map<String, dynamic> body);
 }
 
 @RestApi()
@@ -17,10 +17,10 @@ abstract class AuthRemoteDataSourceImpl implements AuthRemoteDataSourceContract 
       _AuthRemoteDataSourceImpl(dioWrapper.dio, baseUrl: baseUrl);
 
   @override
-  @POST("/users/signup")
-  Future<SignInModel> signIn(Map<String, dynamic> body);
+  @POST("/users/login")
+  Future<SignInModel> signIn(@Body() Map<String, dynamic> body);
 
   @override
-  @POST("/users/login")
-  Future<SignUpModel> signUp(Map<String, dynamic> body);
+  @POST("/users/signup")
+  Future<SignUpModel> signUp(@Body() Map<String, dynamic> body);
 }

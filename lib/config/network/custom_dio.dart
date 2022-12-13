@@ -22,10 +22,16 @@ class CustomDio extends ServiceLocator {
     Response<dynamic> response,
     ResponseInterceptorHandler handler,
   ) {
-    print('RESPONSE::  URI: ${response.data}');
-    print('STATUS CODE: ${response.statusCode}');
-    if (response.statusCode != 200) {
-      throw 'Error: ${response.statusCode}';
+    print('RESPONSE: ${response.data}');
+    if ((response.data as Map)['status'] == 'ok') {
+      // success
+      if ((response.data as Map)['data'] == null) {
+        response.data = [];
+      } else {
+        response.data = (response.data as Map)['data'];
+      }
+
+      return handler.next(response);
     }
   }
 

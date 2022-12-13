@@ -21,13 +21,13 @@ class SigninParams extends ParamsParent {
   const SigninParams({required this.email, required this.password});
 
   @override
-  List<Object?> get props => [email];
+  List<Object?> get props => [email, password];
 
   @override
   Map<String, dynamic> getBody({Map<String, dynamic> params = const {}}) {
     return {
-      "email": email,
       "password": password,
+      "email": email,
     };
   }
 }

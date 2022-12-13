@@ -34,30 +34,28 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  late final AuthBloc bloc;
+
   @override
   void initState() {
+    bloc = globalSL<AuthBloc>();
+    bloc.add(SignInEvent(email: "erkebulan.gaziz@icloud.com", password: "Qwerty123"));
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    bloc.close();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("Test Task")),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          globalSL<AuthBloc>().add(
-            SignInEvent(email: "erkebulanice@gmail.com", password: "qwerty123"),
-          );
-        },
-        child: const Icon(Icons.add),
-      ),
-      body: BlocConsumer<AuthBloc, AuthState>(
-        bloc: globalSL<AuthBloc>(),
-        listener: (context, state) {
-          print('STATE $state');
-        },
+      body: BlocBuilder<AuthBloc, AuthState>(
+        bloc: bloc,
         builder: (context, state) {
-          print('STATE $state');
           if (state is LoadingAuthState) {
             return const Center(child: CircularProgressIndicator());
           }
@@ -66,8 +64,12 @@ class _HomeState extends State<Home> {
           }
           if (state is SignInState) {
             return Center(
-              child: Text(
-                'YOU SUCCESSFULLY SIGNED IN(your token): ${state.signInEntity.accessToken}',
+              child: Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: Text(
+                  'YOU SUCCESSFULLY SIGNED IN(your token): ${state.signInEntity.accessToken}',
+                  style: TextStyle(color: Colors.black),
+                ),
               ),
             );
           }

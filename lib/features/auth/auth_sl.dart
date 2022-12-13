@@ -11,7 +11,7 @@ import 'package:test_task/features/auth/presentation/bloc/auth_bloc.dart';
 class AuthServiceLocator extends ServiceLocator {
   @override
   Future<void> call(GetIt sl) async {
-    sl.registerLazySingleton<AuthBloc>(() => AuthBloc(signinUsecase: sl(), signupUsecase: sl()));
+    sl.registerFactory<AuthBloc>(() => AuthBloc(signinUsecase: sl(), signupUsecase: sl()));
     // use cases
     sl.registerLazySingleton(() => SigninUsecase(sl()));
     sl.registerLazySingleton(() => SignupUsecase(sl()));

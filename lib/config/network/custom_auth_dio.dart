@@ -2,6 +2,8 @@ part of 'custom_dio.dart';
 
 class CustomAuthDio extends CustomDio {
   CustomAuthDio({required super.backendUrl}) {
+    print('BACKEND URL: $backendUrl');
+    print('BACKEND URL: $getBaseOptions');
     dio.options = getBaseOptions;
 
     dio.interceptors.add(
@@ -16,7 +18,12 @@ class CustomAuthDio extends CustomDio {
     RequestOptions requestOptions,
     RequestInterceptorHandler handler,
   ) {
-    print('URL' + requestOptions.baseUrl);
+    print('DATA: ${requestOptions.data}');
+    print('URL: ${requestOptions.path}');
+    requestOptions.headers = {
+      "Content-Type": "application/json",
+      "accept": "application/json",
+    };
     return handler.next(requestOptions);
   }
 

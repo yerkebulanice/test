@@ -19,11 +19,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   Future<void> signIn(SignInEvent event, Emitter<AuthState> emit) async {
     emit(LoadingAuthState());
-
+    print('EMAIL: ${event.email}');
     final result = await signinUsecase(SigninParams(email: event.email, password: event.password));
     emit(result.fold((String error) {
       return FailureAuthState(message: error);
     }, (SignInEntity entity) {
+      print('ENTITY HERE: ${entity.accessToken}');
       return SignInState(signInEntity: entity);
     }));
   }
