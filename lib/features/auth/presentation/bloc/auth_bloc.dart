@@ -19,19 +19,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   Future<void> signIn(SignInEvent event, Emitter<AuthState> emit) async {
     emit(LoadingAuthState());
-    print('EMAIL: ${event.email}');
     final result = await signinUsecase(SigninParams(email: event.email, password: event.password));
-    emit(result.fold((String error) {
-      return FailureAuthState(message: error);
-    }, (SignInEntity entity) {
-      print('ENTITY HERE: ${entity.accessToken}');
-      return SignInState(signInEntity: entity);
-    }));
+    result.fold(
+      (Exception error) {
+        emit(FailureAuthState(message: error.toString()));
+      },
+      (SignInEntity entity) {
+        emit(SignInState(signInEntity: entity));
+      },
+    );
   }
 
   Future<void> signUp(SignUpEvent event, Emitter<AuthState> emit) async {
     emit(LoadingAuthState());
-
     final result = await signupUsecase(SignupParams(
       username: event.username,
       firstName: event.firstName,
@@ -40,10 +40,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       phone: event.phone,
       password: event.password,
     ));
-
-    emit(result.fold(
-      (String error) => FailureAuthState(message: error),
-      (SignUpEntity entity) => SignUpState(signUpEntity: entity),
-    ));
+    result.fold(
+      (Exception error) => emit(FailureAuthState(message: error.toString())),
+      (SignUpEntity entity) => emit(SignUpState(signUpEntity: entity)),
+    );
   }
 }

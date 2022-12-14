@@ -32,6 +32,8 @@ class CustomDio extends ServiceLocator {
       }
 
       return handler.next(response);
+    } else {
+      return handler.next(response);
     }
   }
 

@@ -14,17 +14,15 @@ class AuthRepositoryImpl implements AuthRepositoryContract {
   AuthRepositoryImpl({required this.remoteDataSource});
 
   @override
-  Future<Either<String, SignInEntity>> signIn(SigninParams signinParams) async {
+  Future<Either<Exception, SignInEntity>> signIn(SigninParams signinParams) async {
     return exception2either(function: () async {
-      print('SIGN IN PARAMS: ${signinParams.getBody()}');
       final SignInModel signInModel = await remoteDataSource.signIn(signinParams.getBody());
-      print('SIGN IN MODEL: ${signInModel.toJson()}');
       return signInModel;
     });
   }
 
   @override
-  Future<Either<String, SignUpEntity>> signUp(SignupParams signinParams) async {
+  Future<Either<Exception, SignUpEntity>> signUp(SignupParams signinParams) async {
     return exception2either(function: () async {
       final SignUpModel signUpModel = await remoteDataSource.signUp(signinParams.getBody());
       return signUpModel;

@@ -9,7 +9,7 @@ class SignupUsecase implements UseCase<SignUpEntity, SignupParams> {
   SignupUsecase(this._repositoryContract);
 
   @override
-  Future<Either<String, SignUpEntity>> call(SignupParams params) async {
+  Future<Either<Exception, SignUpEntity>> call(SignupParams params) async {
     return _repositoryContract.signUp(params);
   }
 }
